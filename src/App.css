@@ -1,0 +1,122 @@
+@font-face{
+    font-family: "Montserrat";
+    src: url('./assets//Montserrat-Regular.otf');
+}
+
+
+/***  HEADER STYLES  ***/
+
+.header{
+    padding: 10px 20px;
+    display: flex;
+    background-color: rgb(36, 42, 58);
+    justify-content: space-between;
+    align-items: center;
+}
+.aside-options{
+    width: 300px;
+    display: flex;
+}
+
+.side-menu-btn{
+    cursor: pointer;
+    border-radius: 5px;
+}
+.side-menu-btn:hover{
+    background-color: rgb(71, 68, 68);
+}
+
+.input-field{
+    margin: 0 10px;
+    padding: 0 10px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    background-color: rgb(60, 59, 77);
+    overflow: hidden;
+
+}
+.input-search{
+    background-color: transparent;
+    border: 0;
+    height: 100%;
+    outline: none;
+}
+.logo{
+    width: 300px;
+    cursor: pointer;
+}
+.logo>h1{
+    margin: 0;
+    color: rgb(163, 163, 163);
+
+}
+.user-btn{
+    display: none;
+    color: rgb(163, 163, 163);
+    font-size: 14px;
+}
+
+
+/***  SIDE MENU  ***/
+.side-menu{
+    width: 300px;
+    height: 100%;
+    background-color: rgb(223, 223, 223);
+}
+
+/***  for the bodies of the main components (screens)  ***/
+.screen-content{
+    height: calc(100vh - 63px);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.screen-content__body{
+    width: 100%;
+    overflow-x: auto;
+    background-color: rgb(245, 245, 245);
+}
+
+/***  LOADING SPINNER  ***/
+.loading-spinner{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/***  MODAL BOX  ***/
+
+.modal__box{
+    height: 250px;
+    width: 400px;
+    background-color: white;
+    border: 2px solid #000;
+    border-radius: 8px;
+}
+
+
+/***  BREAKPOINT 786px  ***/
+
+@media (min-width: 786px){
+
+    /*--  HEADER  --*/
+    
+    .user-btn{
+        display: block;
+        color: white;
+    }
+}
+
+
+
+
+/***  BREAKPOINT 1024px  ***/
+@media (min-width: 1024px){
+
+    /*--  HEADER  --*/
+    
+}
