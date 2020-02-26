@@ -31,7 +31,7 @@ interface IState {
     emailWarn: any,
 
     openSnackWarn: boolean,
-    snackWarn: ""
+    snackWarning: string,
 }
 
 export default class RegisterScreen extends Component<IProps, IState> {
@@ -52,14 +52,13 @@ export default class RegisterScreen extends Component<IProps, IState> {
             emailWarn: "",
 
             openSnackWarn: false,
-            snackWarn: ""
+            snackWarning: ""
         }
     }
 
     async register() {
         this.setState({
             isLoading: true,
-            openSnackWarn: true
         })
         //  NEEDS VERIFICATION OF DATA BEFORE POSTING!!!
         let newUser: User = {
@@ -73,19 +72,31 @@ export default class RegisterScreen extends Component<IProps, IState> {
 
         //console.log(newUser);
         let post = await UserService.newUser(newUser); //  call the method that post the new user from UserService
- 
-        if (post.errors) { //  verify if the request returned with any error
-            console.log(post.errors);
+        let errors = post.errors
+
+        if (errors) { //  verify if the request returned with any error
+            if(errors.hasOwnProperty('email')) {
+                console.log(errors.email);
+                this.setState({
+                    emailError: true,
+                    emailWarn: errors.email.join(", ")
+                })
+
+            }
+            //console.log(errors);
             this.setState({
                 isLoading: false,
+                openSnackWarn: true,
+                snackWarning: `O email ${newUser.email} já existe!`
             });
             return
         }
 
-        console.log(post);
+        //console.log(post);
         this.setState({
             isLoading: false,
-            openSnackWarn: true
+            openSnackWarn: true,
+            snackWarning: `Usuário ${newUser.name} adicionado com sucesso!`
         })
     }
 
@@ -206,7 +217,7 @@ export default class RegisterScreen extends Component<IProps, IState> {
                     anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
                     open={this.state.openSnackWarn}
                     onClose={() => this.setState({ openSnackWarn: false })}
-                    message="Usuário adicionado com sucesso!"
+                    message={this.state.snackWarning}
                     autoHideDuration={5000}>
                 </Snackbar>
 
