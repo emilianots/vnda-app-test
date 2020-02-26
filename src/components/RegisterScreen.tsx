@@ -75,41 +75,41 @@ export default class RegisterScreen extends Component<IProps, IState> {
         let errors = post.errors
 
         if (errors) { //  verify if the request returned with any error
-            if(errors.hasOwnProperty('email')) {
-                console.log(errors.email);
+            if (errors.hasOwnProperty('email')) {  //  verify it has any erros related to email
                 this.setState({
                     emailError: true,
-                    emailWarn: errors.email.join(", ")
+                    emailWarn: errors.email.join(", ") //  transforms the errors array into a full string
                 })
-
             }
-            //console.log(errors);
+
             this.setState({
                 isLoading: false,
                 openSnackWarn: true,
-                snackWarning: `O email ${newUser.email} já existe!`
+                snackWarning: `O email ${newUser.email} já existe!` // update the message to display on the snackbar
             });
             return
         }
 
-        //console.log(post);
         this.setState({
             isLoading: false,
             openSnackWarn: true,
-            snackWarning: `Usuário ${newUser.name} adicionado com sucesso!`
+            snackWarning: `Usuário ${newUser.name} adicionado com sucesso!` //  assign the success message
         })
     }
 
-    changeRole = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //  it changes the user role value
+    /* changeRole = (event: React.ChangeEvent<HTMLInputElement>) => {
         let value: number = parseInt(event.target.value, 10);
-        console.log(event.target.id)
+        
+    } */
+    changeRole(value) {
         this.setState({
             role: value
         })
     }
 
-    addTag = (event: React.ChangeEvent<HTMLInputElement>) => {
-        let tags = event.target.value.split(',');
+    addTag(value: string){
+        let tags = value.split(",");
         this.setState({
             tags
         })
@@ -168,8 +168,7 @@ export default class RegisterScreen extends Component<IProps, IState> {
                             value={this.state.role}
                             fullWidth
                             margin="normal"
-                            onChange={this.changeRole}
-                        >
+                            onChange={(role) => this.changeRole(role.target.value)}>
                             <MenuItem key="Gestor" value={0}>Gestor</MenuItem>
                             <MenuItem key="Agente" value={1}>Agente</MenuItem>
                             <MenuItem key="Local" value={2}>Local</MenuItem>
@@ -192,7 +191,7 @@ export default class RegisterScreen extends Component<IProps, IState> {
                             fullWidth
                             margin="normal"
                             helperText="Digite as tags separando-as por vírgula"
-                            onChange={this.addTag} />
+                            onChange={(tags)=> this.addTag(tags.target.value)} />
                     </div>
                     <div style={{ marginTop: "16px" }}>
                         <Button
