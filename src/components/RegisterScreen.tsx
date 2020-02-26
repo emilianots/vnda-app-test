@@ -3,15 +3,25 @@ import SideMenu from './commons/SideMenu';
 import LoadingSpinner from '../components/commons/LoadingSpinner';
 import UserService from '../services/UserService';
 import User from '../models/UserModel';
-import { validate } from '../utils/validation'
+import { validate } from '../utils/validation';
 
+import {
+    AppBar,
+    Toolbar,
+    Button,
+    Typography,
+    TextField,
+    MenuItem,
+    Snackbar
+} from '@material-ui/core'
+/* 
 import AppBar from '@material-ui/core/AppBar';
-import ToolBar from '@material-ui/core/Toolbar';
+import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-import Snackbar from '@material-ui/core/Snackbar';
+import Snackbar from '@material-ui/core/Snackbar'; */
 
 interface IProps {
     history?: any
@@ -108,7 +118,7 @@ export default class RegisterScreen extends Component<IProps, IState> {
         })
     }
 
-    addTag(value: string){
+    addTag(value: string) {
         let tags = value.split(",");
         this.setState({
             tags
@@ -125,9 +135,9 @@ export default class RegisterScreen extends Component<IProps, IState> {
         return (
             <div className="screen-content__body" >
                 <AppBar position="static" color="transparent">
-                    <ToolBar>
+                    <Toolbar>
                         <Typography variant="h6">Novo Usuário</Typography>
-                    </ToolBar>
+                    </Toolbar>
                 </AppBar>
 
                 <form style={{ padding: '20px' }} >
@@ -191,7 +201,7 @@ export default class RegisterScreen extends Component<IProps, IState> {
                             fullWidth
                             margin="normal"
                             helperText="Digite as tags separando-as por vírgula"
-                            onChange={(tags)=> this.addTag(tags.target.value)} />
+                            onChange={(tags) => this.addTag(tags.target.value)} />
                     </div>
                     <div style={{ marginTop: "16px" }}>
                         <Button

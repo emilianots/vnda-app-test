@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { CircularProgress, Typography } from '@material-ui/core';
 
 export default class LoadingSpinner extends Component {
 
@@ -7,7 +7,7 @@ export default class LoadingSpinner extends Component {
         return (
             <div className="loading-spinner">
                 <CircularProgress size={50} />
-                <h2>{this.props.children}</h2>
+                <Typography variant="h5" >{ this.props.children}</Typography>
             </div>
         )
     }
