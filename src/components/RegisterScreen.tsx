@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import Snackbar from '@material-ui/core/Snackbar';
 
 interface IProps {
     history?: any
@@ -28,6 +29,9 @@ interface IState {
 
     emailError: boolean,
     emailWarn: any,
+
+    openSnackWarn: boolean,
+    snackWarn: ""
 }
 
 export default class RegisterScreen extends Component<IProps, IState> {
@@ -46,12 +50,16 @@ export default class RegisterScreen extends Component<IProps, IState> {
 
             emailError: false,
             emailWarn: "",
+
+            openSnackWarn: false,
+            snackWarn: ""
         }
     }
 
     async register() {
         this.setState({
-            isLoading: true
+            isLoading: true,
+            openSnackWarn: true
         })
         //  NEEDS VERIFICATION OF DATA BEFORE POSTING!!!
         let newUser: User = {
@@ -63,23 +71,21 @@ export default class RegisterScreen extends Component<IProps, IState> {
             external_code: this.state.external_code
         }
 
-        console.log(newUser);
-        let post = await UserService.newUser(newUser); //  call the method that post the new user form UserService
+        //console.log(newUser);
+        let post = await UserService.newUser(newUser); //  call the method that post the new user from UserService
  
-        if (post.errors) { //  verify if the request has any error
+        if (post.errors) { //  verify if the request returned with any error
             console.log(post.errors);
             this.setState({
-                isLoading: false
+                isLoading: false,
             });
             return
         }
+
         console.log(post);
         this.setState({
-            isLoading: false
-        })
-
-        this.setState({
-            isLoading: false
+            isLoading: false,
+            openSnackWarn: true
         })
     }
 
@@ -104,6 +110,7 @@ export default class RegisterScreen extends Component<IProps, IState> {
                 <LoadingSpinner>Enviando dados...</LoadingSpinner>
             )
         }
+
         return (
             <div className="screen-content__body" >
                 <AppBar position="static" color="transparent">
@@ -195,6 +202,13 @@ export default class RegisterScreen extends Component<IProps, IState> {
             <div className="screen-content">
                 <SideMenu />
                 {this.renderBody()}
+                <Snackbar
+                    anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
+                    open={this.state.openSnackWarn}
+                    onClose={() => this.setState({ openSnackWarn: false })}
+                    message="Usuário adicionado com sucesso!"
+                    autoHideDuration={5000}>
+                </Snackbar>
 
             </div>
         )

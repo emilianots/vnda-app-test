@@ -14,7 +14,7 @@ router.get('/list', function (req, res) {
         .then(res => res.json())
         .then(data => {
             res.json(data); // retrieving the list of users
-        })
+        }).catch(e=> console.log(e))
 })
 
 /* GET one user by id */
@@ -27,7 +27,7 @@ router.get('/retrieve/:id', function (req, res) {
         .then(res => res.json())
         .then(data =>{
             res.json(data);
-        })
+        }).catch(e=> console.log(e))
 })
 
 /* POST a new user */
@@ -43,7 +43,7 @@ router.post('/register', function (req, res) {
                 return res.json(data);
             }
             return res.json(data); // retrieving the new user object from the server
-        })
+        }).catch(e=> console.log(e))
 })
 
 /* DELETE user  */
@@ -55,7 +55,7 @@ router.delete('/delete/:id', function (req, res) {
         let ok = response.status; // assigning the status code to verify
         if (ok === 204) return res.json({ 'success': true });
         return res.json({ "success": false });
-    })
+    }).catch(e=> console.log(e))
 })
 
 /* UPDATE an existing user */
@@ -71,7 +71,7 @@ router.patch('/update/:id', function (req, res) {
             let ok = response.status
             if (ok === 204) return res.json({ 'success': true });
             return res.json({ "success": false });
-        })
+        }).catch(e=> console.log(e))
 })
 
 

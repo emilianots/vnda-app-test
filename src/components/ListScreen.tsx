@@ -105,7 +105,7 @@ export default class ListScreen extends Component<IProps, IState> {
                     <AppBar position="static" color="transparent">
                         <ToolBar>
                             <Typography variant="h4" style={{ flexGrow: 1 }}>Usuários</Typography>
-                            <Button variant="contained" onClick={() => console.log(this.props.history.push("/register"))}>
+                            <Button variant="contained" onClick={() => this.props.history.push("/register")}>
                                 Novo Usuário
                             </Button>
                         </ToolBar>
@@ -154,7 +154,7 @@ export default class ListScreen extends Component<IProps, IState> {
                     TransitionComponent={Transition}>
                     <DialogTitle>Você está prestes a deletar {this.state.selectedUser?.name}</DialogTitle>
 
-                    <DialogContent>
+                    <DialogContent dividers>
                         <DialogContentText>Você tem certeza de que quer deletar {this.state.selectedUser?.name}?</DialogContentText>
                     </DialogContent>
 
