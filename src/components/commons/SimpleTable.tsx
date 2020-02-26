@@ -20,7 +20,8 @@ import User from '../../models/UserModel';
 
 interface IProps {
     users: Array<User>;
-    delete?: any
+    delete?: any,
+    navigate?: any
 }
 
 interface IState {
@@ -49,7 +50,7 @@ export default class SimpleTable extends Component<IProps> {
                                     <IconButton onClick={() => this.props.delete(row)} ><Close /></IconButton>
                                 </TableCell>
                                 <TableCell padding="checkbox">
-                                    <IconButton onClick={() => console.log(row.id)} ><Edit /></IconButton>
+                                    <IconButton onClick={() => this.props.navigate(row.id)} ><Edit /></IconButton>
                                 </TableCell>
                                 <TableCell component="th"scope="row" >{row.email}</TableCell>
                                 <TableCell >{row.name}</TableCell>

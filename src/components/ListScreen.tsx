@@ -28,7 +28,7 @@ const Transition = React.forwardRef<unknown, TransitionProps>(function Transitio
 
 
 interface IProps {
-    history?: any
+    history?: any,
 }
 
 interface IState {
@@ -51,6 +51,7 @@ export default class ListScreen extends Component<IProps, IState> {
             openSnackWarn: false
         }
         this.deleteUser = this.deleteUser.bind(this);
+        this.toUpdateScreen = this.toUpdateScreen.bind(this);
     }
 
     //  calls the class UserService
@@ -65,14 +66,15 @@ export default class ListScreen extends Component<IProps, IState> {
                 selectedUser: null
             })
             return
-
         }
         //  
     }
 
+
+    //  called when the delete comand is cofirmed
     async confirmateDelete(id) {
         this.setState({
-            isLoading: true, // start the loading on screen of the DELETE request
+            isLoading: true, // start the loading on screen for the DELETE request
         })
 
         //  call the method to DELETE and assing the response {success: true | false}
@@ -94,6 +96,10 @@ export default class ListScreen extends Component<IProps, IState> {
         });
     }
 
+    toUpdateScreen(id){
+        this.props.history.push('/update/' + id);
+    }
+
     componentDidMount() {
         this.getData(); // calls the method to load the data
     }
@@ -110,7 +116,7 @@ export default class ListScreen extends Component<IProps, IState> {
                             </Button>
                         </ToolBar>
                     </AppBar>
-                    <SimpleTable delete={this.deleteUser} users={this.state.users} />
+                    <SimpleTable navigate={this.toUpdateScreen} delete={this.deleteUser} users={this.state.users} />
                 </div>
             )
         }
@@ -142,7 +148,7 @@ export default class ListScreen extends Component<IProps, IState> {
                 </Modal>
 
                 <Snackbar
-                    anchorOrigin={{horizontal: "center", vertical: "top"}}
+                    anchorOrigin={{horizontal: "center", vertical: "bottom"}}
                     open={this.state.openSnackWarn}
                     onClose={() => this.setState({ openSnackWarn: false })}
                     message="Deletado com sucesso!"

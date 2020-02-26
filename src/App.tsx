@@ -20,7 +20,7 @@ class App extends Component {
 
         <Route exact path="/" component={ListScreen} />
         <Route path="/register" component={RegisterScreen} />
-        <Route path="/update" component={UpdateScreen} />
+        <Route path="/update/:id" component={UpdateScreen} />
       </Router>
     )
   }

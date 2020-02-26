@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import SideMenu from './commons/SideMenu';
+import LoadingSpinner from './commons/LoadingSpinner'
 import UserService from '../services/UserService';
 import User from '../models/UserModel';
 
 interface IProps {
-    history?: any
+    history?: any,
+    match?: any
 }
 
 interface IState {
-    user: User;
+    user: User | null;
     isLoading: boolean
 }
 
@@ -16,56 +18,46 @@ export default class UpdateScreen extends Component<IProps, IState> {
 
     constructor(props: IProps) {
         super(props)
-        this.state = {
-            user: {
-                id: 0,
-                name: "",
-                email: "",
-                tags: [''],
-                role: 0,
-                external_code: ""
-            },
-            isLoading: false
+        this.state ={
+            user: null,
+            isLoading: true
         }
     }
 
-    verifyData(){
-        
+    verifyData() {
+
     }
 
-    async register() {
+    async getUser(id) {
+        console.log(this.state.user);
 
-        //  NEEDS VERIFICATION OF DATA BEFORE POSTING!!!
-        let newUser: User = {
-            id: null,
-            name: this.state.user.name,
-            email: this.state.user.email,
-            tags: this.state.user.tags,
-            role: this.state.user.role,
-            external_code: this.state.user.external_code
-        }
-        let post = await UserService.newUser(newUser); //  call the method that post the new user form UserService
-
-        if (post.errors) { //  verify if the request has any error
-            console.log(post.errors);
-            this.setState({
-                isLoading: false
-            });
-            return
-        }
-        console.log(post);
+        let user = await UserService.getUser(id);
         this.setState({
+            user: user,
             isLoading: false
         })
+        console.log(this.state.user);
+    }
 
+    renderBody(){
+        if(this.state.isLoading){
+            return(
+                <LoadingSpinner>Carregando usuário</LoadingSpinner>
+            )
+        }
+    }
+
+    componentDidMount() {
+        //console.log(this.props.match.params.id)
+        this.getUser(this.props.match.params.id)
     }
 
     render() {
         return (
-            <div className="list-screen">
+            <div className="screen-content">
                 <SideMenu />
-                <h4>Adicionar</h4>
-                
+                {this.renderBody()}
+
             </div>
         )
     }
