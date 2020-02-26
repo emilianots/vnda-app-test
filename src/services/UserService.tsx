@@ -8,11 +8,13 @@ const baseURL = "http://localhost:3002/users";
 export default class UserService {
 
     static getAllUsers() {
-        return Axios.get(baseURL + '/list').then(response => response.data) // tratar maiores ações com o retorno sem .data?
+        return Axios.get(baseURL + '/list').then(response => response.data)
     }
 
     static getUser(id: number) {
-        return Axios.get(baseURL + "/retrieve/" + id).then(res => res.data);
+        return Axios.get(baseURL + "/retrieve/" + id).then(res => res.data).catch(e => {
+            console.log(e)
+        })
     }
 
     static newUser(user: User) {

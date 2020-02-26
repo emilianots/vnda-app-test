@@ -36,7 +36,7 @@ interface IState {
     isLoading: boolean
     confirm: boolean
     selectedUser: User | null,
-    success: boolean
+    openSnackWarn: boolean
 }
 
 export default class ListScreen extends Component<IProps, IState> {
@@ -48,7 +48,7 @@ export default class ListScreen extends Component<IProps, IState> {
             isLoading: false,
             confirm: false,
             selectedUser: null,
-            success: false
+            openSnackWarn: false
         }
         this.deleteUser = this.deleteUser.bind(this);
     }
@@ -57,29 +57,37 @@ export default class ListScreen extends Component<IProps, IState> {
     async getData() {
         let response = await UserService.getAllUsers(); //  calls the method that returns the data
 
-        this.setState({
-            users: response,
-            isLoading: false,
-            confirm: false,
-            selectedUser: null,
-            success: false
-        })
-    }
-    async confirmateDelete(id) {
-        this.setState({
-            isLoading: true
-        })
-        let deletRequest = await UserService.deleteUser(id);
-        console.log(deletRequest);
-        if(deletRequest.success){
+        if (response) {
             this.setState({
-                success: true
+                users: response,
+                isLoading: false,
+                confirm: false,
+                selectedUser: null
             })
+            return
+
         }
-        this.getData();
+        //  
     }
 
-    async deleteUser(user: User) {
+    async confirmateDelete(id) {
+        this.setState({
+            isLoading: true, // start the loading on screen of the DELETE request
+        })
+
+        //  call the method to DELETE and assing the response {success: true | false}
+        let deletRequest = await UserService.deleteUser(id);
+
+        if (deletRequest.success) {
+            this.setState({
+                openSnackWarn: true
+            })
+        }
+
+        this.getData();  //  update the list on the screen with 1 user less
+    }
+
+    deleteUser(user: User) {  //  this method is passed as props to the SimpleTable component
         this.setState({
             confirm: true,
             selectedUser: user
@@ -112,9 +120,9 @@ export default class ListScreen extends Component<IProps, IState> {
     }
 
     render() {
-        //console.log(this.state.users)
         return (
             <div className="screen-content">
+
                 <SideMenu />
 
                 <Modal // LOADING MODAL FOR DELETING 
@@ -133,7 +141,12 @@ export default class ListScreen extends Component<IProps, IState> {
                     </Fade>
                 </Modal>
 
-                <Snackbar open={this.state.success} message="Deletado com sucesso!" autoHideDuration={6000}>
+                <Snackbar
+                    anchorOrigin={{horizontal: "center", vertical: "top"}}
+                    open={this.state.openSnackWarn}
+                    onClose={() => this.setState({ openSnackWarn: false })}
+                    message="Deletado com sucesso!"
+                    autoHideDuration={5000}>
                 </Snackbar>
 
                 <Dialog    //  CONFIRM DELETE USER

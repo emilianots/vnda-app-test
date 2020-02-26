@@ -49,10 +49,6 @@ export default class RegisterScreen extends Component<IProps, IState> {
         }
     }
 
-    verifyData() {
-
-    }
-
     async register() {
         this.setState({
             isLoading: true

@@ -10,8 +10,6 @@ import IconButton from '@material-ui/core/IconButton'
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography'
 
-
-
 import {
     Close,
     Edit
@@ -51,7 +49,7 @@ export default class SimpleTable extends Component<IProps> {
                                     <IconButton onClick={() => this.props.delete(row)} ><Close /></IconButton>
                                 </TableCell>
                                 <TableCell padding="checkbox">
-                                    <IconButton onClick={() => console.log("clicou no edit")} ><Edit /></IconButton>
+                                    <IconButton onClick={() => console.log(row.id)} ><Edit /></IconButton>
                                 </TableCell>
                                 <TableCell component="th"scope="row" >{row.email}</TableCell>
                                 <TableCell >{row.name}</TableCell>
