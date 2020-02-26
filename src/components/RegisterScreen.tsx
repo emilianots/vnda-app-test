@@ -12,16 +12,14 @@ import {
     Typography,
     TextField,
     MenuItem,
-    Snackbar
+    Snackbar,
+    IconButton
 } from '@material-ui/core'
-/* 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import Snackbar from '@material-ui/core/Snackbar'; */
+
+import {
+    NavigateBefore
+} from "@material-ui/icons"
+
 
 interface IProps {
     history?: any
@@ -105,13 +103,9 @@ export default class RegisterScreen extends Component<IProps, IState> {
             openSnackWarn: true,
             snackWarning: `Usuário ${newUser.name} adicionado com sucesso!` //  assign the success message
         })
+        //this.props.history.goBack();
     }
 
-    //  it changes the user role value
-    /* changeRole = (event: React.ChangeEvent<HTMLInputElement>) => {
-        let value: number = parseInt(event.target.value, 10);
-        
-    } */
     changeRole(value) {
         this.setState({
             role: value
@@ -136,6 +130,9 @@ export default class RegisterScreen extends Component<IProps, IState> {
             <div className="screen-content__body" >
                 <AppBar position="static" color="transparent">
                     <Toolbar>
+                        <IconButton onClick={() => this.props.history.goBack()}>
+                            <NavigateBefore />
+                        </IconButton>
                         <Typography variant="h6">Novo Usuário</Typography>
                     </Toolbar>
                 </AppBar>

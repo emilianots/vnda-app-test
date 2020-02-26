@@ -5,7 +5,7 @@ export default class LoadingSpinner extends Component {
 
     render() {
         return (
-            <div className="loading-spinner">
+            <div className="d-flex-col-center">
                 <CircularProgress size={50} />
                 <Typography variant="h5" >{ this.props.children}</Typography>
             </div>

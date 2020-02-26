@@ -4,6 +4,8 @@ import LoadingSpinner from './commons/LoadingSpinner'
 import UserService from '../services/UserService';
 import User from '../models/UserModel';
 
+import { } from 'react-router-dom';
+
 import {
     AppBar,
     Toolbar,
@@ -11,19 +13,29 @@ import {
     Typography,
     TextField,
     MenuItem,
-    Snackbar
-} from '@material-ui/core'
+    Snackbar,
+    IconButton
+} from '@material-ui/core';
+import { NavigateBefore } from '@material-ui/icons'
 
 interface IProps {
     history?: any,
-    match?: any
+    match?: any,
+    wanring?: any
 }
 
 interface IState {
-    user: User | null;
+    id: number | null,
+    email: string,
+    name: string,
+    tags: Array<string>,
+    role: number,
+    external_code: string,
+
     isLoading: boolean,
-    errorMessage: string,
-    emailError: boolean,
+
+    openSnackWarn: boolean,
+    snackWarning: string
 
 }
 
@@ -32,16 +44,19 @@ export default class UpdateScreen extends Component<IProps, IState> {
     constructor(props: IProps) {
         super(props)
         this.state = {
-            user: null,
+
+            id: null,
+            email: "",
+            name: "",
+            tags: [],
+            role: 0,
+            external_code: "",
+
             isLoading: true,
-            errorMessage: "",
 
-            emailError: false
+            openSnackWarn: false,
+            snackWarning: ""
         }
-    }
-
-    verifyData() {
-
     }
 
     async getUser(id) {
@@ -49,15 +64,63 @@ export default class UpdateScreen extends Component<IProps, IState> {
         if (user.hasOwnProperty("error")) {
             this.setState({
                 isLoading: false,
-                errorMessage: user.error
+                openSnackWarn: false,
+                snackWarning: user.error
             })
             return
         }
         this.setState({
-            user: user,
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            tags: user.tags,
+            role: user.role,
+            external_code: user.external_code,
+
             isLoading: false
         })
         //console.log(this.state.user);
+    }
+
+    async register() {
+        this.setState({
+            isLoading: true,
+            //openSnackWarn: true
+        })
+        //  NEEDS VERIFICATION OF DATA BEFORE POSTING!!!
+        let user: User = {
+            id: this.state.id,
+            name: this.state.name,
+            email: this.state.email,
+            tags: this.state.tags,
+            role: this.state.role,
+            external_code: this.state.external_code
+        }
+
+        //console.log(newUser);
+        let post = await UserService.updateUser(user); //  call the method that post the new user from UserService
+        let errors = post.errors
+
+        this.setState({
+            //isLoading: false,
+            openSnackWarn: true,
+            snackWarning: `Usuário "${user.name}" atualizado com sucesso!` //  assign the success message
+        })
+        this.getUser(user.id);
+        //this.props.history.goBack();
+    }
+
+    changeRole(value) {
+        this.setState({
+            role: value
+        })
+    }
+
+    addTag(value: string) {
+        let tags = value.split(",");
+        this.setState({
+            tags
+        })
     }
 
     renderBody() {
@@ -66,12 +129,25 @@ export default class UpdateScreen extends Component<IProps, IState> {
                 <LoadingSpinner>Carregando usuário</LoadingSpinner>
             )
         }
+        if (!this.state.id) {
+            return (
+                <div className="d-flex-col-center">
+                    <Typography variant="h4" >
+                        Erro: usuário não encontrado
+                    </Typography>
+
+                </div>
+            )
+        }
 
         return (
             <div className="screen-content__body" >
                 <AppBar position="static" color="transparent">
                     <Toolbar>
-                        <Typography variant="h6">Atualizar dados: {this.state.user?.name}</Typography>
+                        <IconButton onClick={()=> this.props.history.goBack()}>
+                            <NavigateBefore/>
+                        </IconButton>
+                        <Typography variant="h6">Atualizar dados: {this.state.email}</Typography>
                     </Toolbar>
                 </AppBar>
 
@@ -84,7 +160,7 @@ export default class UpdateScreen extends Component<IProps, IState> {
                             fullWidth
                             disabled
                             margin="normal"
-                            value={this.state.user?.email} />
+                            value={this.state.email} />
                     </div>
                     <div>
                         <TextField
@@ -93,7 +169,8 @@ export default class UpdateScreen extends Component<IProps, IState> {
                             label="Nome"
                             fullWidth
                             margin="normal"
-                            value={this.state.user?.name} />
+                            value={this.state.name}
+                            onChange={(name) => this.setState({ name: name.target.value })} />
                     </div>
                     <div>
                         <TextField
@@ -101,9 +178,10 @@ export default class UpdateScreen extends Component<IProps, IState> {
                             select
                             label="Função"
                             variant="outlined"
-                            value={this.state.user?.role}
+                            value={this.state.role}
                             fullWidth
-                            margin="normal">
+                            margin="normal"
+                            onChange={(role) => this.changeRole(role.target.value)}>
                             <MenuItem key="Gestor" value={0}>Gestor</MenuItem>
                             <MenuItem key="Agente" value={1}>Agente</MenuItem>
                             <MenuItem key="Local" value={2}>Local</MenuItem>
@@ -116,7 +194,8 @@ export default class UpdateScreen extends Component<IProps, IState> {
                             label="Código externo"
                             fullWidth
                             margin="normal"
-                            value={this.state.user?.external_code} />
+                            value={this.state.external_code}
+                            onChange={(external_code) => this.setState({ external_code: external_code.target.value })} />
                     </div>
                     <div>
                         <TextField
@@ -126,15 +205,16 @@ export default class UpdateScreen extends Component<IProps, IState> {
                             fullWidth
                             margin="normal"
                             helperText="Digite as tags separando-as por vírgula"
-                            value={this.state.user?.tags.join(", ")} />
+                            value={this.state.tags.join(",")}
+                            onChange={(tags) => this.addTag(tags.target.value)} />
                     </div>
                     <div style={{ marginTop: "16px" }}>
                         <Button
                             variant="contained"
-                            disabled={this.state.emailError || this.state.user?.email.length === 0}
                             onClick={() => {
                                 //this.register()
-                                console.log(this.state.user)
+                                //this.props.history.goBack()
+                                this.register()
                             }}
                         >Salvar</Button>
                     </div>
@@ -154,6 +234,13 @@ export default class UpdateScreen extends Component<IProps, IState> {
             <div className="screen-content">
                 <SideMenu />
                 {this.renderBody()}
+                <Snackbar
+                    anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
+                    open={this.state.openSnackWarn}
+                    onClose={() => this.setState({ openSnackWarn: false })}
+                    message={this.state.snackWarning}
+                    autoHideDuration={5000}>
+                </Snackbar>
             </div>
         )
     }

@@ -22,7 +22,7 @@ export default class UserService {
     }
 
     static updateUser(user: User) {
-        return Axios.patch(baseURL + '/update/' + user.id).then(res => res.data);
+        return Axios.patch(baseURL + '/update/' + user.id, user).then(res => res.data);
     }
 
     static deleteUser(id: number) {

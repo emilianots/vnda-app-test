@@ -79,7 +79,7 @@
 }
 
 /***  LOADING SPINNER  ***/
-.loading-spinner{
+.d-flex-col-center{
     width: 100%;
     height: 100%;
     display: flex;
