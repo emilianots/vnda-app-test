@@ -99,7 +99,7 @@ export default class UpdateScreen extends Component<IProps, IState> {
 
         //console.log(newUser);
         let post = await UserService.updateUser(user); //  call the method that post the new user from UserService
-        let errors = post.errors
+        //let errors = post.errors
 
         this.setState({
             //isLoading: false,

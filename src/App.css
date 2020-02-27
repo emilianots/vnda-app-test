@@ -6,57 +6,14 @@
 
 /***  HEADER STYLES  ***/
 
-.header{
-    padding: 10px 20px;
-    display: flex;
-    background-color: rgb(36, 42, 58);
-    justify-content: space-between;
-    align-items: center;
-}
-.aside-options{
-    width: 300px;
-    display: flex;
-}
-
-.side-menu-btn{
-    cursor: pointer;
-    border-radius: 5px;
-}
-.side-menu-btn:hover{
-    background-color: rgb(71, 68, 68);
-}
-
 .input-field{
-    margin: 0 10px;
+    margin: 0 50px 0 10px;
     padding: 0 10px;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    background-color: rgb(60, 59, 77);
     overflow: hidden;
+    border-radius: 20px;
+    background-color: rgb(163, 163, 163);
 
 }
-.input-search{
-    background-color: transparent;
-    border: 0;
-    height: 100%;
-    outline: none;
-}
-.logo{
-    width: 300px;
-    cursor: pointer;
-}
-.logo>h1{
-    margin: 0;
-    color: rgb(163, 163, 163);
-
-}
-.user-btn{
-    display: none;
-    color: rgb(163, 163, 163);
-    font-size: 14px;
-}
-
 
 /***  SIDE MENU  ***/
 .side-menu{

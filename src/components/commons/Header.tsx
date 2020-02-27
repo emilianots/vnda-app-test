@@ -1,32 +1,46 @@
 import React, { Component } from 'react';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 
+import {
+    AppBar,
+    Toolbar,
+    IconButton,
+    Typography,
+    Input,
+    InputAdornment,
+} from "@material-ui/core";
+
+import {
+    Menu,
+    Search
+} from "@material-ui/icons"
 
 export default class Header extends Component {
 
     render() {
         return (
-            <header className="header">
-                <div className="aside-options">
+            <AppBar
+                style={{backgroundColor: "#2c3049"}}
+                position="static"
+                variant="elevation">
+                <Toolbar>
+                    <IconButton>
+                        <Menu style={{color: "lightgrey"}} />
+                    </IconButton>
+                    <Input
+                        className="input-field"
+                        startAdornment={
+                            <InputAdornment position="start">
+                                <Search />
+                            </InputAdornment>
+                        }
+                    />
+                    <Typography style={{ flex: 1 }} variant="h4">Vnda</Typography>
+                    <Typography style={{ color: "lightgrey" }} >vnda@vnda.com.br</Typography>
+                </Toolbar>
 
-                    <MenuIcon className="side-menu-btn" fontSize="large" style={{ color: "gray" }} />
+            </AppBar>
 
-                    <div className="input-field">
-                        <SearchIcon />
-                        <input className="input-search" />
-                    </div>
 
-                </div>
-
-                <div className="logo">
-                    <h1>Vnda</h1>
-                </div>
-
-                <div className="user-btn">
-                    <span>reis@vnda.com</span>
-                </div>
-            </header>
         )
     }
 }
