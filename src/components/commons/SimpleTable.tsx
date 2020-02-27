@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 
-import Table from '@material-ui/core/Table';
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
-import TableBody from '@material-ui/core/TableBody'
-import IconButton from '@material-ui/core/IconButton'
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography'
+import {
+    Table,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TableBody,
+    Paper,
+    Typography,
+    IconButton
+} from "@material-ui/core";
 
 import {
     Close,
@@ -20,8 +22,8 @@ import User from '../../models/UserModel';
 
 interface IProps {
     users: Array<User>;
-    delete?: any,
-    navigate?: any
+    delete?: any, // delete method that cames from the parent
+    navigate?: any // this will navigate due to the id passed
 }
 
 interface IState {
@@ -47,12 +49,16 @@ export default class SimpleTable extends Component<IProps> {
                         {this.props.users.map(row => ( // iterating the user array passed to the props
                             <TableRow>
                                 <TableCell padding="checkbox">
-                                    <IconButton onClick={() => this.props.delete(row)} ><Close /></IconButton>
+                                    <IconButton onClick={() => {
+                                        this.props.delete(row) //  delete user selected
+                                    }} ><Close /></IconButton>
                                 </TableCell>
                                 <TableCell padding="checkbox">
-                                    <IconButton onClick={() => this.props.navigate(row.id)} ><Edit /></IconButton>
+                                    <IconButton onClick={() => {
+                                        this.props.navigate(row.id); // navigate to edit the user selected
+                                    }} ><Edit /></IconButton>
                                 </TableCell>
-                                <TableCell component="th"scope="row" >{row.email}</TableCell>
+                                <TableCell component="th" scope="row" >{row.email}</TableCell>
                                 <TableCell >{row.name}</TableCell>
                                 <TableCell >{row.external_code}</TableCell>
                             </TableRow>

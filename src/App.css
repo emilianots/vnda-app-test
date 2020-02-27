@@ -3,7 +3,6 @@
     src: url('./assets//Montserrat-Regular.otf');
 }
 
-
 /***  HEADER STYLES  ***/
 
 .input-field{
@@ -53,27 +52,4 @@
     background-color: white;
     border: 2px solid #000;
     border-radius: 8px;
-}
-
-
-/***  BREAKPOINT 786px  ***/
-
-@media (min-width: 786px){
-
-    /*--  HEADER  --*/
-    
-    .user-btn{
-        display: block;
-        color: white;
-    }
-}
-
-
-
-
-/***  BREAKPOINT 1024px  ***/
-@media (min-width: 1024px){
-
-    /*--  HEADER  --*/
-    
 }

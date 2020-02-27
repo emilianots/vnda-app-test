@@ -5,15 +5,17 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 
-import InboxIcon from '@material-ui/icons/Inbox';
-import ShoppingCart from '@material-ui/icons/ShoppingCart';
-import FormatListBulleted from '@material-ui/icons/FormatListBulleted';
-import LocalOffer from '@material-ui/icons/LocalOffer';
-import Person from '@material-ui/icons/Person';
-import TurnedIn from '@material-ui/icons/TurnedIn';
-import AccountTree from '@material-ui/icons/AccountTree';
-import Description from '@material-ui/icons/Description';
-import YouTube from '@material-ui/icons/YouTube';
+import {
+    Inbox,
+    ShoppingCart,
+    FormatListBulleted,
+    LocalOffer,
+    Person,
+    TurnedIn,
+    AccountTree,
+    Description,
+    YouTube
+} from "@material-ui/icons";
 
 export default class SideMenu extends Component {
 
@@ -24,7 +26,7 @@ export default class SideMenu extends Component {
                 <List >
                     <ListItem button>
                         <ListItemIcon>
-                            <InboxIcon />
+                            <Inbox />
                         </ListItemIcon>
                         <ListItemText primary="Pedidos" />
                     </ListItem>
@@ -82,31 +84,3 @@ export default class SideMenu extends Component {
         )
     }
 }
-/* <div className="side-menu">
-                <div className="main-options">
-                    <a href="/">
-                        Pedidos
-                        </a>
-                    <a href="/">
-                        Carrinho
-                        </a>
-                    <a href="/">
-                        Produtos
-                        </a>
-                    <a href="/">
-                        Tags
-                        </a>
-                    <a href="/">
-                        Clientes
-                        </a>
-                    <a href="/">
-                        Promoções
-                        </a>
-                </div>
-
-                <div className="main-options navigation-options">
-                    <a href="/">Menu</a>
-                    <a href="/">Paginas</a>
-                    <a href="/">Banners</a>
-                </div>
-            </div> */

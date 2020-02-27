@@ -36,7 +36,6 @@ interface IState {
 
     openSnackWarn: boolean,
     snackWarning: string
-
 }
 
 export default class UpdateScreen extends Component<IProps, IState> {
@@ -59,7 +58,7 @@ export default class UpdateScreen extends Component<IProps, IState> {
         }
     }
 
-    async getUser(id) {
+    async getUser(id) {  //  it will get the user form the server
         let user = await UserService.getUser(id);
         if (user.hasOwnProperty("error")) {
             this.setState({
@@ -79,15 +78,12 @@ export default class UpdateScreen extends Component<IProps, IState> {
 
             isLoading: false
         })
-        //console.log(this.state.user);
     }
 
     async register() {
         this.setState({
             isLoading: true,
-            //openSnackWarn: true
         })
-        //  NEEDS VERIFICATION OF DATA BEFORE POSTING!!!
         let user: User = {
             id: this.state.id,
             name: this.state.name,
@@ -97,17 +93,13 @@ export default class UpdateScreen extends Component<IProps, IState> {
             external_code: this.state.external_code
         }
 
-        //console.log(newUser);
         let post = await UserService.updateUser(user); //  call the method that post the new user from UserService
-        //let errors = post.errors
 
         this.setState({
-            //isLoading: false,
             openSnackWarn: true,
             snackWarning: `Usuário "${user.name}" atualizado com sucesso!` //  assign the success message
         })
         this.getUser(user.id);
-        //this.props.history.goBack();
     }
 
     changeRole(value) {
@@ -158,7 +150,7 @@ export default class UpdateScreen extends Component<IProps, IState> {
                             variant="outlined"
                             label="E-mail"
                             fullWidth
-                            disabled
+                            disabled  //  email can not be changed
                             margin="normal"
                             value={this.state.email} />
                     </div>
@@ -212,8 +204,6 @@ export default class UpdateScreen extends Component<IProps, IState> {
                         <Button
                             variant="contained"
                             onClick={() => {
-                                //this.register()
-                                //this.props.history.goBack()
                                 this.register()
                             }}
                         >Salvar</Button>
@@ -224,9 +214,7 @@ export default class UpdateScreen extends Component<IProps, IState> {
     }
 
     componentDidMount() {
-        //console.log(this.props.match.params.id)
         this.getUser(this.props.match.params.id)
-        //this.getUser(100)
     }
 
     render() {

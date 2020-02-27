@@ -68,7 +68,7 @@ export default class RegisterScreen extends Component<IProps, IState> {
         this.setState({
             isLoading: true,
         })
-        //  NEEDS VERIFICATION OF DATA BEFORE POSTING!!!
+
         let newUser: User = {
             id: null,
             name: this.state.name,
@@ -78,12 +78,11 @@ export default class RegisterScreen extends Component<IProps, IState> {
             external_code: this.state.external_code
         }
 
-        //console.log(newUser);
         let post = await UserService.newUser(newUser); //  call the method that post the new user from UserService
-        let errors = post.errors
+        let errors = post.errors  //  will be undefined if the response get success
 
         if (errors) { //  verify if the request returned with any error
-            if (errors.hasOwnProperty('email')) {  //  verify it has any erros related to email
+            if (errors.hasOwnProperty('email')) {  //  verify if it has any errors related to email
                 this.setState({
                     emailError: true,
                     emailWarn: errors.email.join(", ") //  transforms the errors array into a full string
@@ -106,13 +105,13 @@ export default class RegisterScreen extends Component<IProps, IState> {
         //this.props.history.goBack();
     }
 
-    changeRole(value) {
+    changeRole(value) { //  change the role state on change
         this.setState({
             role: value
         })
     }
 
-    addTag(value: string) {
+    addTag(value: string) {  //  splits the tags written
         let tags = value.split(",");
         this.setState({
             tags
@@ -226,7 +225,6 @@ export default class RegisterScreen extends Component<IProps, IState> {
                     message={this.state.snackWarning}
                     autoHideDuration={5000}>
                 </Snackbar>
-
             </div>
         )
     }

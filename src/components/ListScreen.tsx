@@ -1,26 +1,29 @@
 import React, { Component } from 'react';
 import UserService from '../services/UserService';
-import AppBar from '@material-ui/core/AppBar';
-import ToolBar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
-import Snackbar from '@material-ui/core/Snackbar';
-
-import { TransitionProps } from '@material-ui/core/transitions'; // testar se com a chamada por nome realmente pesa
-
 import SideMenu from './commons/SideMenu';
 import LoadingSpinner from './commons/LoadingSpinner';
 import SimpleTable from './commons/SimpleTable';
 import User from '../models/UserModel';
+
+import {
+    AppBar,
+    Toolbar,
+    Button,
+    Typography,
+    Modal,
+    Backdrop,
+    Fade,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Slide,
+    Snackbar
+} from "@material-ui/core";
+
+import { TransitionProps } from '@material-ui/core/transitions'; // testar se com a chamada por nome realmente pesa
+
 
 const Transition = React.forwardRef<unknown, TransitionProps>(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -67,7 +70,6 @@ export default class ListScreen extends Component<IProps, IState> {
             })
             return
         }
-        //  
     }
 
 
@@ -109,12 +111,12 @@ export default class ListScreen extends Component<IProps, IState> {
             return (
                 <div className="screen-content__body">
                     <AppBar position="static" color="transparent">
-                        <ToolBar>
+                        <Toolbar>
                             <Typography variant="h4" style={{ flexGrow: 1 }}>Usuários</Typography>
                             <Button variant="contained" onClick={() => this.props.history.push("/register")}>
                                 Novo Usuário
                             </Button>
-                        </ToolBar>
+                        </Toolbar>
                     </AppBar>
                     <SimpleTable navigate={this.toUpdateScreen} delete={this.deleteUser} users={this.state.users} />
                 </div>
@@ -147,7 +149,7 @@ export default class ListScreen extends Component<IProps, IState> {
                     </Fade>
                 </Modal>
 
-                <Snackbar
+                <Snackbar //  wanning on delet success
                     anchorOrigin={{horizontal: "center", vertical: "bottom"}}
                     open={this.state.openSnackWarn}
                     onClose={() => this.setState({ openSnackWarn: false })}

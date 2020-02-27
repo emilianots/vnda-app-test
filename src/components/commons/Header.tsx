@@ -32,15 +32,11 @@ export default class Header extends Component {
                             <InputAdornment position="start">
                                 <Search />
                             </InputAdornment>
-                        }
-                    />
+                        }/>
                     <Typography style={{ flex: 1 }} variant="h4">Vnda</Typography>
                     <Typography style={{ color: "lightgrey" }} >vnda@vnda.com.br</Typography>
                 </Toolbar>
-
             </AppBar>
-
-
         )
     }
 }
